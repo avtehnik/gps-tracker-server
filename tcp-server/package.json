@@ -8,5 +8,11 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "mysql": "^2.15.0",
+    "mysql2": "^1.5.3",
+    "npm": "^6.1.0",
+    "sequelize": "^4.38.0"
+  }
 }
