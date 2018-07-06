@@ -1,10 +1,12 @@
+const config = require('./config');
 var Sequelize = require('sequelize');
 
-var connection = new Sequelize('tracker_db', 'track-user', 'password',{
-	host: 'localhost',
-  	dialect: 'mysql',
+var connection = new Sequelize(config.sql.db, config.sql.user, config.sql.pass,{
+	host: config.sql.host,
+  	dialect: config.sql.dialect,
   	operatorsAliases: false,
-
+  	// disable logging; default: console.log
+  	logging: false,
   	pool: {
     	max: 5,
     	min: 0,
@@ -13,18 +15,15 @@ var connection = new Sequelize('tracker_db', 'track-user', 'password',{
   	}
 });
 
-var TrackerData = connection.define('track_data', {
-	date: Sequelize.INTEGER,
+var TrackerData = connection.define(config.sql.table, {
 	lat: Sequelize.FLOAT(8,6),
 	lng: Sequelize.FLOAT(9,6),
 	speed: Sequelize.FLOAT(4,1),
 	direction: Sequelize.FLOAT(5,2),
-	gpsUid: Sequelize.STRING(12)
+	gpsUid: Sequelize.STRING(12),
+  date_time: Sequelize.DATE
 });
 
-//connection.sync();
-
 module.exports = {
-	connection,
 	TrackerData
 }
