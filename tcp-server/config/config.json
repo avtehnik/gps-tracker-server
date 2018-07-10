@@ -1,8 +1,8 @@
 {
   "development": {
-    "username": "track-user",
+    "username": "trackUser",
     "password": "password",
-    "database": "tracker_db",
+    "database": "trackDB",
     "host": "127.0.0.1",
     "dialect": "mysql",
     "operatorsAliases": "false"

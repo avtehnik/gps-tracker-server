@@ -15,7 +15,7 @@ function getInc(val, min, max) {
 	if(val >= max){
 		val = min;
 	}
-  	return val; 
+  	return val;
 }
 
 var client = new net.Socket();
@@ -29,10 +29,22 @@ function myConnect(message){
 
 client.connect(1337, '127.0.0.1', function() {
 	console.log('Connected');
-	setInterval(function() {
-					client.write('(027043887991BR00160718A4928.5660N03159.8943E000.0035519264.2000000000L00000000)');
+	var myYear = 0;
+	var invId = setInterval(function() {
+					myYear += 1;							//for testing: from 2001 to 2031 year
+					var myYearStr = myYear.toString();
+					if(myYearStr.length < 2){
+						myYearStr = `0${myYear}`;
+					}
+					if(myYear > 30){
+						myYear = 0;
+						clearInterval(invId);
+					}
+					client.write(`(027043887991BR00${myYearStr}0718A4928.5660N03159.8943E000.0035519264.2000000000L00000000)(027043887991BR00${myYearStr}0718A4928.5660N03159.8943E000.0035519264.2000000000L00000000)(027043887991BP00BAra.hlo)`);
+					
+					//client.write('(027043887991BR00160718A4928.5660N03159.8943E000.0035519264.2000000000L00000000)');
 					console.log('send!');
-				},2000);
+				},200);
 });
 
 client.on('data', function(data) {
