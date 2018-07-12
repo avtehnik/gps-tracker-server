@@ -13,19 +13,19 @@ var server = net.createServer(function(socket) {
 
 	socket.on('data', function(data) {
 		//console.log(data);
-		var parsedData = trackerData.trackParse(data);
-		parsedData.forEach(function (object){
-			if(object.type == 'BR00'){			// regular GPS message
+		var messages = trackerData.trackParse(data);
+		messages.forEach(function (message){
+			if(message.type == 'BR00'){			// regular GPS message
 				TrackerDatabase.create({
-					lat: object.lat,
-					lng: object.lng,
-					speed: object.speed,
-					direction: object.direction,
-					gpsUid: object.gpsUid,
-					trackerTime: object.trackerDayTime//myDateTime
+					lat: message.lat,
+					lng: message.lng,
+					speed: message.speed,
+					direction: message.direction,
+					gpsUid: message.gpsUid,
+					trackerTime: message.trackerDayTime//myDateTime
 				});
-			}else if(object.type == 'BP05'){	// handshake
-				socket.write(`(0${object.gpsUid}AP05)`);
+			}else if(message.type == 'BP05'){	// handshake
+				socket.write(`(0${message.gpsUid}AP05)`);
 			}
 		});
 		//socket.write(data); // test for client

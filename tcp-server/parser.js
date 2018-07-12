@@ -50,8 +50,7 @@ var trackerData = {
 		};
     },
 
-    decodeBR05: function (data) {			// not finished (not all parsed)
-    	var trackerDayTime = new Date();
+    decodeBP05: function (data) {			// not finished (not all parsed)
 		var gpsUid = data.substring(2, 13);
 		var type = data.substring(13, 17);
 
@@ -72,7 +71,7 @@ var trackerData = {
 		        if (type == 'BR00') {
 		        	returnArray.push(this.decodeBR00(data));
 		        } else if (type == 'BP05') {
-		            returnArray.push(this.decodeBR05(data));
+		            returnArray.push(this.decodeBP05(data));
 		        } else if (type == 'BP00') {
 		            //result = this.handShake(str)
 		        }
