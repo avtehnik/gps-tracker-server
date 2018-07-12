@@ -2,7 +2,7 @@
 const config = require('./config');
 const Joi = require('joi');
 const express = require('express');
-const { TrackerDatabase } = require('./db');
+const db = require('./models/index.js');
 const myTcp = require('./tcp');
 var path = require('path');
 var Sequelize = require('sequelize');
@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //PORT
-const port = config.http.envport;
+const port = config.http_port;
 app.listen(port, () => console.log(`listening on port ${port} ...`));
 
 app.get('/api/route', (req, res) => {
@@ -47,7 +47,7 @@ app.get('/api/route', (req, res) => {
 		where['limit'] = 1000;
 	}
 
-	TrackerDatabase.findAll(where)
+	db.trackData.findAll(where)
 	.then((data) => {
 		// console.log("RES",data);
 		res.send(data);

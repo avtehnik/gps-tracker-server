@@ -21,13 +21,13 @@ function getInc(val, min, max) {
 var client = new net.Socket();
 
 function myConnect(message){
-	client.connect(1337, '127.0.0.1', function() {
+	client.connect(3000, '127.0.0.1', function() {
 		console.log('Connected');
 		client.write(message);
 	});
 }
 
-client.connect(1337, '127.0.0.1', function() {
+client.connect(3000, '127.0.0.1', function() {
 	console.log('Connected');
 	var myYear = 0;
 	var test = 0;

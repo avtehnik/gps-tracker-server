@@ -1,6 +1,6 @@
 const config = require('./config');
 var net = require('net');
-const { TrackerDatabase } = require('./db');
+const db = require('./models/index.js');
 var { trackerData } = require('./parser');
 
 var server = net.createServer(function(socket) {
@@ -16,7 +16,7 @@ var server = net.createServer(function(socket) {
 		var messages = trackerData.trackParse(data);
 		messages.forEach(function (message){
 			if(message.type == 'BR00'){			// regular GPS message
-				TrackerDatabase.create({
+				db.trackData.create({
 					lat: message.lat,
 					lng: message.lng,
 					speed: message.speed,
@@ -32,7 +32,7 @@ var server = net.createServer(function(socket) {
 	});
 });
 
-server.listen(config.tcp.port, config.tcp.host);
+server.listen(config.tcp_port, '0.0.0.0');
 
 /*
 And connect with a tcp client from the command line using netcat, the *nix 
