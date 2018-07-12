@@ -15,7 +15,7 @@ var server = net.createServer(function(socket) {
 		//console.log(data);
 		var parsedData = trackerData.trackParse(data);
 		parsedData.forEach(function (object){
-			if(object.type == 'BR00'){
+			if(object.type == 'BR00'){			// regular GPS message
 				TrackerDatabase.create({
 					lat: object.lat,
 					lng: object.lng,
@@ -24,11 +24,12 @@ var server = net.createServer(function(socket) {
 					gpsUid: object.gpsUid,
 					trackerTime: object.trackerDayTime//myDateTime
 				});
+			}else if(object.type == 'BP05'){	// handshake
+				socket.write(`(0${object.gpsUid}AP05)`);
 			}
 		});
 		//socket.write(data); // test for client
 	});
-	//socket.write('Echo server\r\n');
 });
 
 server.listen(config.tcp.port, config.tcp.host);

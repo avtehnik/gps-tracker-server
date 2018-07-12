@@ -1,0 +1,39 @@
+fieldset {
+	position: absolute;
+    background-color: rgba(0, 0, 0, 0.1);/*#fff;*/
+    margin-top: 20%;
+    padding: 2px 2px;
+    width: 140px;
+    z-index: 5;
+    left: 0;
+}
+
+#stdate-panel {
+}
+#enddate-panel {
+}
+
+legend {
+	margin-left: auto; 
+	margin-right: auto; 
+	text-align: center;
+
+    background-color: #000;
+    color: #fff;
+    padding: 3px 6px;
+}
+
+.output {
+    font: 1rem 'Fira Sans', sans-serif;
+}
+
+input {
+    margin: .4rem;
+}
+
+label {
+    display: inline-block;
+    text-align: right;
+    /*width: 20%;*/
+}
+
