@@ -21,21 +21,20 @@
   </head>
   <body>
     <fieldset>
-      <legend>Choose trip dates</legend>
-
+      <!-- <legend>Choose trip dates</legend> -->
+      
       <div id="stdate-panel">
           <label for="start">Start</label>
-          <input type="date" id="start" name="trip"
-                 value="2000-00-00"
-                 min="2000-00-00" max="2050-12-31" />
+          <input type="date" id="start" name="trip"/>
+          <span class="validity"></span>
       </div>
-
+            
       <div id="enddate-panel">
           <label for="end">End</label>
-          <input type="date" id="end" name="trip"
-                 value="2000-00-00"
-                 min="2000-00-00" max="2050-12-31"/ >
+          <input type="date" id="end" name="trip"/ >
+          <span class="validity"></span>
       </div>
+
       <div id="submit-query">
           <input type="submit" id="submit-date" value="find">
       </div>

@@ -1,16 +1,22 @@
 fieldset {
 	position: absolute;
-    background-color: rgba(0, 0, 0, 0.1);/*#fff;*/
-    margin-top: 20%;
+    background-color: rgba(0, 0, 0, 0.1);
+    /*margin-top: 20%;*/
     padding: 2px 2px;
-    width: 140px;
+    /*width: 100%*/
     z-index: 5;
     left: 0;
+    /*flex:1 1 auto;*/
 }
 
 #stdate-panel {
+    float:left
 }
 #enddate-panel {
+    float:left
+}
+#submit-query {
+    float:left
 }
 
 legend {
@@ -29,11 +35,5 @@ legend {
 
 input {
     margin: .4rem;
-}
-
-label {
-    display: inline-block;
-    text-align: right;
-    /*width: 20%;*/
 }
 

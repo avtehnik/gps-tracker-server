@@ -1,4 +1,5 @@
 tcp-server/dtb.js
 tcp-server/node_modules/
 tcp-server/package-lock.json
+tcp-server/config.js
 
