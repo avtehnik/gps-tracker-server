@@ -20,9 +20,10 @@
     </style>
   </head>
   <body>
+
+  <div class="main-panel">
     <fieldset>
       <!-- <legend>Choose trip dates</legend> -->
-      
       <div id="stdate-panel">
           <label for="start">Start</label>
           <input type="date" id="start" name="trip"/>
@@ -40,6 +41,12 @@
       </div>
 
     </fieldset>
+    <div id="path-length" class="path">
+          <label for="path">Path length:</label>
+          <p id="path-value"></p>
+          <label for="km"> km</label>
+    </div>
+  </div>
     <div id="map"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
     <script src="main.js"></script>

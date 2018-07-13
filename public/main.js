@@ -51,11 +51,11 @@
 
   }
 
-  function getPolyLineLenght(){
-    
+  function getPolyLineLenght(polyLine){
+    return google.maps.geometry.spherical.computeLength(polyLine.getPath().getArray());
   }
 
-  function zoomToPoints(forZoomPoints){
+  function fitMapPoints(forZoomPoints){
     var bounds = new google.maps.LatLngBounds();
     
     forZoomPoints.forEach((forZoomPoint)=>{
@@ -66,18 +66,22 @@
   }
 
   function visualizeData(points){
-    console.log("points",points);
+    points = points.reverse();    //array comming from last to fresh value
+    // console.log("points",points);
     cleanMap();
 
     if(points.length == 0) return;
 
-    var polyLineLength = addLine(points);
-    var stopItem = points[0];
-    var startItem = points[points.length-1];
+    var polyLineObgect = addLine(points);
+    var polyLineLength = getPolyLineLenght(polyLineObgect);
+    document.getElementById("path-value").innerHTML = parseInt(polyLineLength)/1000;   //  parseInt(polyLineLength)/1000 for indication in km
+    
+    var startItem = points[0];
+    var stopItem = points[points.length-1];
     
     console.log("polyLineLength", polyLineLength);
 
-    zoomToPoints(points);
+    fitMapPoints(points);   // fit map to points
 
     addMarker(startItem,'#START');
     addMarker(stopItem,'#STOP');
@@ -114,13 +118,17 @@
       strokeColor: '#FF0000',
       strokeOpacity: 1.0,
       strokeWeight: 2,  
-      map:map
+      map:map,
+      icons: [{
+        icon: {path: google.maps.SymbolPath.FORWARD_OPEN_ARROW},
+        offset: `100%`,
+        repeat: '150px'
+      }]
     });
 
     mapObjects.push(tripPath)
 
-    tripPath.setMap(map);
-    return google.maps.geometry.spherical.computeLength(tripPath.getPath().getArray()); // return polyline length in meters
+    return  tripPath// return polyline
   }
 
   // Removes the objects from the map, but keeps them in the array.
