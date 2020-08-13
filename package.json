@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "nodemon ./index.js"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +15,7 @@
     "joi": "^13.4.0",
     "mysql": "^2.15.0",
     "mysql2": "^1.5.3",
+    "nodemon": "^2.0.4",
     "npm": "^6.1.0",
     "sequelize": "^4.38.0"
   }
