@@ -209,16 +209,26 @@ var lineSymbol = {
 function addLine(points, speed) {
 
     var path = [];
+    var line = new google.maps.Polyline({
+        path: points,
+        geodesic: false,
+        strokeColor: 'black',
+        strokeOpacity: 1.0,
+        map: map,
+        strokeWeight: 4
+    });
+    mapObjects.push(line);
+
     var tripPath = new google.maps.Polyline({
         path: points,
-        geodesic: true,
+        geodesic: false,
         strokeColor: getGreenToRed(speed.interval),
         strokeOpacity: 1.0,
         strokeWeight: 2,
         map: map,
         icons: [{
             // icon: {path: google.maps.SymbolPath.FORWARD_OPEN_ARROW},
-            icon: lineSymbol,
+            // icon: lineSymbol,
             offset: `100%`,
             repeat: '150px'
         }]
