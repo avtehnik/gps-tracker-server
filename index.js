@@ -1,4 +1,3 @@
-
 const config = require('./config');
 const Joi = require('joi');
 const express = require('express');
@@ -28,28 +27,59 @@ app.get('/api/route', (req, res) => {
 // return;
 
 
-	var startDate = req.query.from;
-	var endDate = req.query.to;
-	var where = {
-			order: [['id', 'DESC']],	// Will escape id and validate DESC against a list of valid direction parameters
-	}
+    var startDate = req.query.from;
+    var endDate = req.query.to;
+    var where = {
+        order: [['id', 'DESC']],	// Will escape id and validate DESC against a list of valid direction parameters
+        where: {}
+    };
 
-	// console.log('startDate',startDate);
-	// console.log('endDate', endDate);
+    if (req.query.udid) {
+        where['where'].gpsUid = req.query.udid;
+    }
 
-	if(startDate && endDate){
-		where['where'] = {
-			trackerTime:{
-				$between: [startDate, endDate]
-			}
-		}
-	}else{
-		where['limit'] = 1000;
-	}
+    // console.log('startDate',startDate);
+    // console.log('endDate', endDate);
 
-	db.trackData.findAll(where)
-	.then((data) => {
-		// console.log("RES",data);
-		res.send(data);
-	});
+    if (startDate && endDate) {
+        where['where'].createdAt = {
+            $between: [startDate, endDate]
+        }
+    } else {
+        where['limit'] = 1000;
+    }
+
+    db.trackData.findAll(where)
+        .then((data) => {
+            // console.log("RES",data);
+            res.send(data);
+        });
+});
+
+
+const a9g = express();
+
+//PORT
+const a9gPort = 8082;
+a9g.listen(a9gPort, () => console.log(`listening on port ${a9gPort} ...`));
+
+a9g.post('/', (req, res) => {
+
+    console.log(req.query);
+    if (parseFloat(req.query.lat) == 90.000000 || parseFloat(req.query.lon) == 0.000000) {
+        res.json([]);
+        return
+    }
+    var record = {
+        lat: parseFloat(req.query.lat),
+        lng: parseFloat(req.query.lon),
+        speed: parseFloat(req.query.speed),
+        direction: parseFloat(req.query.bearing),
+        gpsUid: req.query.id.substring(0, 11),
+        trackerTime: new Date(parseInt(req.query.timestamp) * 1000)
+    };
+
+    console.log(record);
+    db.trackData.create(record);
+    res.json([]);
 });

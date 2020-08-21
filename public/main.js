@@ -24,7 +24,7 @@ function getGreenToRed(speed) {
 function initMap() {
     document.getElementById('end').valueAsDate = new Date();
     var dStart = new Date();
-    dStart.setDate(dStart.getDate());
+    dStart.setDate(dStart.getDate() - 7);
     document.getElementById('start').valueAsDate = dStart;
 
     map = new google.maps.Map(document.getElementById('map'), {
@@ -56,6 +56,10 @@ function initMap() {
 
 document.getElementById('submit-query').onclick = function() {                // button submit date
     var startDate = new Date(document.getElementById('start').value);
+    startDate.setUTCHours(0);    //corection calendar date object
+    startDate.setMinutes(0);
+    startDate.setSeconds(0);
+
     var endDate = new Date(document.getElementById('end').value);
     if ((startDate == 'Invalid Date') || (endDate == 'Invalid Date') || (endDate < startDate)) {   // Date validation
         alert('Invalid Date');
@@ -89,7 +93,7 @@ function haversine_distance(position1, position2) {
     var difflon = (position2.lng() - position1.lng()) * (Math.PI / 180); // Radian difference (longitudes)
 
     var d = 2 * R * Math.asin(Math.sqrt(Math.sin(difflat / 2) * Math.sin(difflat / 2) + Math.cos(rlat1) * Math.cos(rlat2) * Math.sin(difflon / 2) * Math.sin(difflon / 2)));
-    return d;
+    return Math.abs(d * 1000);
 }
 
 function visualizeData(points) {
@@ -140,20 +144,20 @@ function visualizeData(points) {
             // console.log(seconds / dist, dist, seconds);
         }
 
-        if (speed != prevSpeed) {
+        var dist = haversine_distance(new google.maps.LatLng(prevPoint.lat, prevPoint.lng), new google.maps.LatLng(points[i].lat, points[i].lng));
+
+        if (speed != prevSpeed || i == points.length - 1 ) {
             speedObj.interval = speed;
-            newPoints.push(points[i])
+            if (dist < 2000) {
+                newPoints.push(points[i]);
+            }
 
             speedObj.direction = points[i].direction;
             speedObj.time = points[i].trackerTime;
             let polyLineObgect = addLine(newPoints, speedObj);
             fullPolyLineLength += getPolyLineLenght(polyLineObgect);
 
-            // if (seconds > 7200) {
-            //     newPoints = [];
-            // } else {
             newPoints = [points[i]];
-            // }
 
 
             speedObj = {
@@ -185,7 +189,7 @@ function loadData(optoins) {
     if (optoins.from && optoins.to) {
         q = {from: optoins.from, to: optoins.to};
     }
-
+    q.udid = document.getElementById('tracker').value
     jQuery.get("/api/route", q, optoins.cb);
 }
 

@@ -5,15 +5,14 @@ fieldset {
     left: 0;
 }
 
-#stdate-panel {
-    float:left
-}
-#enddate-panel {
-    float:left
-}
+
+#tracker-chooser-panel,
+#stdate-panel,
+#enddate-panel,
 #submit-query {
     float:left
 }
+
 
 #path-length{
     padding-top: 5px;
@@ -48,6 +47,7 @@ legend {
     font: 1rem 'Fira Sans', sans-serif;
 }
 
+select,
 input {
     margin: .4rem;
 }
